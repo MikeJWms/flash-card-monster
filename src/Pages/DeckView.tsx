@@ -1,0 +1,77 @@
+import { useParams } from "react-router-dom";
+import { DeckContext } from "../contexts/DeckContext";
+import { useContext } from "react";
+import AddCard, { AddCardKit } from "../components/AddCard";
+import Button, { BUTTON_THEME, BUTTON_SIZE } from "../components/Button";
+import { useHistory } from "react-router-dom";
+import CardSummary from "../components/CardSummary";
+import { PlayIcon } from "@heroicons/react/solid";
+import DefaultLayout from "../layouts/DefaultLayout";
+import SelectedDeckNotFound from "../components/SelectedDeckNotFound";
+
+export default function DeckView() {
+  const { id } = useParams<{ id: string }>();
+  const { deckState } = useContext(DeckContext);
+
+  const history = useHistory();
+
+  const { showAddCard, setShowAddCard } = AddCardKit();
+
+  if (!id) {
+    history.push(`/`);
+    return null;
+  }
+
+  const selectedDeck: Deck = deckState.find(
+    (element: Deck) => element.id === id
+  );
+
+  if (!selectedDeck) {
+    console.log("Deck not selected ", selectedDeck);
+    return SelectedDeckNotFound({ selectedDeck, history });
+  }
+
+  return (
+    <DefaultLayout>
+      <AddCard
+        deckId={id}
+        show={showAddCard}
+        updateShowState={setShowAddCard}
+      />
+      <div className="mb-4">
+        <h1 className="text-xl mb-4 inline">{selectedDeck.name}</h1>
+        <Button
+          className=" ml-4"
+          onClick={() => {
+            setShowAddCard(true);
+          }}
+          size={BUTTON_SIZE.SMALL}
+          theme={BUTTON_THEME.SUCCESS}
+        >
+          + Add Card
+        </Button>
+        <Button
+          className=" ml-4"
+          onClick={() => {
+            history.push(`/study-mode/${id}`);
+          }}
+          size={BUTTON_SIZE.SMALL}
+          theme={BUTTON_THEME.PRIMARY}
+        >
+          <div className="flex items-baseline">
+            <PlayIcon className="h-4 mr-2 self-center" />
+
+            <span className="">Play</span>
+          </div>
+        </Button>
+      </div>
+      <p>{selectedDeck.description}</p>
+
+      <div>
+        {selectedDeck.cards.map((card: Card) => {
+          return <CardSummary key={card.id} card={card} deckId={id} />;
+        })}
+      </div>
+    </DefaultLayout>
+  );
+}

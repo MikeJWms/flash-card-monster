@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# www.FlashCard.monster
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A lightweight flash card web app. Make and study decks of flash cards all in your browser.
 
-## Available Scripts
+## Demo
 
-In the project directory, you can run:
+www.FlashCard.monster
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Client:** React, Local Storage, TailwindCSS
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Server:** None! It's all client side.
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Auto save your deck and cards to your browser's local storage
+- Cross platform - visit with your favorite web browser and start studying
+- Sharable decks (coming soon)
+- Light & dark theme (coming soon)
 
-### `npm run build`
+## Run Locally
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the project
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+  git clone https://github.com/MikeJWms/flash-card-monster.git
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Go to the project directory
 
-### `npm run eject`
+```bash
+  cd flash-card-monster
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Install dependencies
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+  npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. Start the server
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+  npm run start
+```
 
-## Learn More
+# www.FlashCard.monster
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+A lightweight flash card web app. Make and study decks of flash cards all in your browser.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Demo
 
-### Code Splitting
+www.FlashCard.monster
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Tech Stack
 
-### Analyzing the Bundle Size
+**Client:** React, Local Storage, TailwindCSS
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Server:** None! It's all client side.
 
-### Making a Progressive Web App
+## Features
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Auto save your deck and cards to your browser's local storage
+- Cross platform - visit with your favorite web browser and start studying
+- Sharable decks (coming soon)
+- Light & dark theme (coming soon)
 
-### Advanced Configuration
+## Run Locally
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Clone the project
 
-### Deployment
+2. Go to the project directory
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+  cd flash-card-monster
+```
 
-### `npm run build` fails to minify
+3. Install dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+  npm install
+```
+
+4. Start the server
+
+```bash
+  npm run start
+```
