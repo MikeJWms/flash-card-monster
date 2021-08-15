@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { DeckContextProvider } from "./contexts/DeckContext";
 import Nav from "./components/Nav";
-import Decks from "./Pages/Decks";
-import DeckView from "./Pages/DeckView";
-import StudyMode from "./Pages/StudyMode";
+import Decks from "./pages/Decks";
+import DeckView from "./pages/DeckView";
+import StudyMode from "./pages/StudyMode";
 
 function App() {
   return (
