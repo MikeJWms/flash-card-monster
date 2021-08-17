@@ -95,33 +95,37 @@ export default function StudyMode(props: {}) {
 
   return (
     <div
-      className="grid grid-cols-3 grid-rows-3"
-      style={{ height: `calc(100vh - ${navHeight}px)` }}
+      className="grid"
+      style={{
+        height: `calc(100vh - ${navHeight}px)`,
+        gridTemplateRows: "1fr minmax(0, 2fr) 1fr",
+        gridTemplateColumns: "1fr minmax(0, 2fr) 1fr",
+      }}
     >
-      <div className="mb-4 pt-4 pl-4">
+      <div className="mb-4 pt-4 pl-4 col-span-2">
         <h1 className="text-xl">Let's Study</h1>
         <p>{`${selectedCard}/${numberOfCards}`} Cards</p>
       </div>
       <button
-        className="row-start-2 col-start-1 mr-auto p-8"
+        className="row-start-3 md:row-start-2 col-start-1 mr-auto p-8 mt-auto mb-2 md:mb-0 md:mt-0"
         onClick={() => changeCard(-1)}
       >
         <ArrowLeftIcon className="w-8" />
       </button>
       <button
-        className="row-start-2 col-start-3 ml-auto p-8"
+        className="row-start-3 md:row-start-2 col-start-3 ml-auto p-8 mt-auto mb-2 md:mb-0 md:mt-0"
         onClick={() => changeCard(1)}
       >
         <ArrowRightIcon className="w-8" />
       </button>
       <Button
-        className="mt-auto mb-8 row-start-3 col-start-2"
+        className="mt-auto mb-8 row-start-3 col-start-2 justify-self-center w-full max-w-xs"
         onClick={flipCard}
       >
         Flip
-        <ArrowUpIcon className="inline h-4 ml-4 text-blue-400" />
+        <ArrowUpIcon className="hidden md:inline h-4 ml-4 text-blue-400" />
       </Button>
-      <div className="row-start-2 col-start-2 self-center">
+      <div className="col-span-3 md:col-span-1 m-4 md:m-0 row-start-2 md:col-start-2 self-center">
         <Card
           card={selectedDeck.cards[selectedCard]}
           className="mx-auto"
