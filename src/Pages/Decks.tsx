@@ -4,6 +4,8 @@ import AddDeck, { AddDeckKit } from "../components/AddDeck";
 import DeckSummary from "../components/DeckSummary";
 import Button, { BUTTON_THEME, BUTTON_SIZE } from "../components/Button";
 import DefaultLayout from "../layouts/DefaultLayout";
+import AddDeckForm, { Submit } from "../components/add-deck/AddDeckForm";
+import AddDeckModal from "../components/add-deck/AddDeckModal";
 
 export default function Decks() {
   const { deckState } = useContext(DeckContext);
@@ -29,6 +31,7 @@ export default function Decks() {
       {deckState.map((deck: Deck) => {
         return <DeckSummary key={deck.id} deck={deck}></DeckSummary>;
       })}
+      <AddDeckModal></AddDeckModal>
     </DefaultLayout>
   );
 }

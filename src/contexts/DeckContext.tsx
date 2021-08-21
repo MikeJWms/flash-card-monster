@@ -112,7 +112,46 @@ const deckReducer = (state: Deck[], action: DeckReducerAction) => {
 const initialDeckState = ((): Deck[] => {
   const initial = getLocalSotrageItem(LOCAL_STORAGE_KEYS.DECK_STATE)
     ? getLocalSotrageItem(LOCAL_STORAGE_KEYS.DECK_STATE)
-    : [createDeck("Deck 1", "My first deck", [createCard(), createCard()])];
+    : [
+        createDeck(
+          "Tutorial",
+          "Learn how to use FlashCard.Monster - Click here!",
+          [
+            createCard(
+              ["Welcome to Flash Card Monster", ""],
+              [
+                "‎The fastest way to make flash cards",
+                "for studdying and memory recall.",
+              ]
+            ),
+            createCard(
+              ["Flash Card Monster makes it easy to create flash cards", ""],
+              ["", ""]
+            ),
+            createCard(
+              ["Create new flash card decks!", ""],
+              ["Click “+ Add Deck” to get started.", ""]
+            ),
+            createCard(
+              ["Create and organize your flash cards", ""],
+              [
+                "Click “+ Add Card” to create new cards.",
+                "Don't worry, you can leave and come back, your work will still be here!",
+              ]
+            ),
+            createCard(
+              [
+                "When it’s time to start studying, click “Play” to review your flash cards one at a time.",
+                "",
+              ],
+              [
+                "Navigate back to your decks at any time by clicking the Logo.",
+                "",
+              ]
+            ),
+          ]
+        ),
+      ];
   return initial;
 })();
 
