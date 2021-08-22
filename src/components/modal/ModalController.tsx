@@ -4,6 +4,7 @@ import Modal, { THEME } from "./Modal";
 export default function ModalController(props: {
   show?: boolean;
   children?: ReactElement;
+  title?: string;
   submitAction: () => void;
   updateShowState: (state: boolean) => void;
 }) {
@@ -27,7 +28,7 @@ export default function ModalController(props: {
     <Modal
       open={modalOpen}
       handleClose={handleModalClose}
-      title="Add Card"
+      title={props.title}
       content={props.children ? props.children : <></>}
       submit={{
         label: "Add Card",

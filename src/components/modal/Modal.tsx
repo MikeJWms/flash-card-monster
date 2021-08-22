@@ -30,7 +30,7 @@ export const THEME: {
 export default function Modal(props: {
   open: boolean;
   handleClose: any;
-  title: string;
+  title?: string;
   content: ReactElement;
   submit: { label: string; theme: typeof THEME.key; action: any };
   cancel: any;

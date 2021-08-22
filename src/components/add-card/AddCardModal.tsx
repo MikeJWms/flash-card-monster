@@ -1,8 +1,9 @@
 import Button from "../Button";
 import ModalController, { ModalKit } from "../modal/ModalController";
-import AddDeckForm, { Submit } from "./AddDeckForm";
+import AddCardForm, { Submit } from "./AddCardForm";
 
-export default function AddDeckModal(props: {
+export default function AddCardModal(props: {
+  deckId: string;
   button?: {
     size?: string;
     theme?: ButtonTheme;
@@ -17,12 +18,12 @@ export default function AddDeckModal(props: {
   return (
     <>
       <ModalController
-        title="Add Deck"
+        title="Add Card"
         show={showModal}
         submitAction={Submit}
         updateShowState={handleModalClose}
       >
-        <AddDeckForm />
+        <AddCardForm deckId={props.deckId} />
       </ModalController>
       <Button
         onClick={() => {
@@ -31,7 +32,7 @@ export default function AddDeckModal(props: {
         size={props.button?.size}
         theme={props.button?.theme}
       >
-        + Add Deck
+        + Add Card
       </Button>
     </>
   );

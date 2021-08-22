@@ -6,7 +6,7 @@ export default function Card(props: {
   className?: string;
   flip?: Boolean;
 }) {
-  const [isFirstRender, setIsFirstRender] = useState(true);
+  const isFirstRender = useRef(true);
 
   const [isShow, setIsShow] = useState(true);
 
@@ -16,22 +16,18 @@ export default function Card(props: {
 
   const updateTimer: any = useRef(null);
 
-  function setUpdate() {
-    setIsShow(false);
-    updateTimer.current = setTimeout(() => {
-      setIsShow(true);
-      setShowingCard(props.card);
-      updateTimer.current = null;
-    }, animationInterval * 2);
-  }
-
   useEffect(() => {
-    if (isFirstRender) {
-      setIsFirstRender(false);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
     } else if (!updateTimer.current) {
-      setUpdate();
+      setIsShow(false);
+      updateTimer.current = setTimeout(() => {
+        setIsShow(true);
+        setShowingCard(props.card);
+        updateTimer.current = null;
+      }, animationInterval * 2);
     }
-  }, [props.card]);
+  }, [props.card, animationInterval]);
 
   return (
     <Transition
