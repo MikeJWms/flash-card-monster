@@ -1,5 +1,5 @@
 import Button from "../Button";
-import ModalController, { ModalKit } from "../modal/ModalController";
+import ModalController, { useModal } from "../modal/ModalController";
 import AddDeckForm, { Submit } from "./AddDeckForm";
 
 export default function AddDeckModal(props: {
@@ -8,11 +8,7 @@ export default function AddDeckModal(props: {
     theme?: ButtonTheme;
   };
 }) {
-  const { showModal, setShowModal } = ModalKit();
-
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
+  const { showModal, setShowModal, handleModalClose } = useModal();
 
   return (
     <>
@@ -21,6 +17,7 @@ export default function AddDeckModal(props: {
         show={showModal}
         submitAction={Submit}
         updateShowState={handleModalClose}
+        submitButtonText="Add Deck"
       >
         <AddDeckForm />
       </ModalController>

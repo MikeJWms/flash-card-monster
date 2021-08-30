@@ -3,11 +3,11 @@ import Input from "../Input";
 
 import { DeckContext, DECK_ACTIONS } from "../../contexts/DeckContext";
 
-export default function AddCard(props: { deckId: string }) {
+export default function AddCard(props: { deckId: string, front?: [string, string], back?: [string, string] }) {
   // local state
   const [newCardState, setNewCardState] = useState({
-    front: ["", ""],
-    back: ["", ""],
+    front: props.front || ["", ""],
+    back: props.back || ["", ""],
   });
 
   // input handeling - update local state

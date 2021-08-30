@@ -8,7 +8,10 @@ import Input from "../Input";
 
 import { DeckContext, DECK_ACTIONS } from "../../contexts/DeckContext";
 
-export default function AddDeckForm() {
+export default function AddDeckForm(props: {
+  name?: string;
+  description?: string;
+}) {
   // input handeling
   const onInputChange = (event: any) => {
     // update local deck state
@@ -40,8 +43,8 @@ export default function AddDeckForm() {
   };
 
   const [newDeckState, setNewDeckState] = useState({
-    name: "",
-    description: "",
+    name: props.name || "",
+    description: props.description || "",
   });
 
   return (

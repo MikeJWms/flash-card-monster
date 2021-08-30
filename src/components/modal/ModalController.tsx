@@ -5,6 +5,7 @@ export default function ModalController(props: {
   show?: boolean;
   children?: ReactElement;
   title?: string;
+  submitButtonText?: string;
   submitAction: () => void;
   updateShowState: (state: boolean) => void;
 }) {
@@ -31,7 +32,7 @@ export default function ModalController(props: {
       title={props.title}
       content={props.children ? props.children : <></>}
       submit={{
-        label: "Add Card",
+        label: props.submitButtonText || "Submit",
         theme: THEME.SUCCESS,
         action: props.submitAction,
       }}
@@ -40,7 +41,12 @@ export default function ModalController(props: {
   );
 }
 
-export const ModalKit = () => {
+export function useModal() {
   const [showModal, setShowModal] = useState(false);
-  return { showModal, setShowModal };
-};
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+  return { showModal, setShowModal, handleModalClose };
+}

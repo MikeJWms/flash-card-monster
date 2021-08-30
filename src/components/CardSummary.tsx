@@ -6,7 +6,7 @@ import {
   PencilAltIcon,
 } from "@heroicons/react/outline";
 import { Popover } from "@headlessui/react";
-import Card from "./Card";
+
 
 export default function CardSummary(props: { card: Card; deckId: string }) {
   const { card } = props;

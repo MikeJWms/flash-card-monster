@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { DeckContext } from "../contexts/DeckContext";
 import DeckSummary from "../components/DeckSummary";
 import { BUTTON_THEME, BUTTON_SIZE } from "../components/Button";
 import DefaultLayout from "../layouts/DefaultLayout";
-import AddDeckModal from "../components/add-deck/AddDeckModal";
+import AddDeckModal from "../components/add-edit-deck/AddDeckModal";
 
 export default function Decks() {
   const { deckState } = useContext(DeckContext);

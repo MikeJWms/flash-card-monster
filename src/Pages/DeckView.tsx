@@ -8,7 +8,7 @@ import { PlayIcon } from "@heroicons/react/solid";
 import DefaultLayout from "../layouts/DefaultLayout";
 import SelectedDeckNotFound from "../components/SelectedDeckNotFound";
 
-import AddCardModal from "../components/add-card/AddCardModal";
+import AddCardModal from "../components/add-edit-card/AddCardModal";
 
 export default function DeckView() {
   const { id } = useParams<{ id: string }>();

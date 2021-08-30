@@ -1,5 +1,5 @@
 import Button from "../Button";
-import ModalController, { ModalKit } from "../modal/ModalController";
+import ModalController, { useModal } from "../modal/ModalController";
 import AddCardForm, { Submit } from "./AddCardForm";
 
 export default function AddCardModal(props: {
@@ -9,11 +9,7 @@ export default function AddCardModal(props: {
     theme?: ButtonTheme;
   };
 }) {
-  const { showModal, setShowModal } = ModalKit();
-
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
+  const { showModal, setShowModal, handleModalClose } = useModal();
 
   return (
     <>
@@ -22,6 +18,7 @@ export default function AddCardModal(props: {
         show={showModal}
         submitAction={Submit}
         updateShowState={handleModalClose}
+        submitButtonText="Add Card"
       >
         <AddCardForm deckId={props.deckId} />
       </ModalController>

@@ -11,6 +11,7 @@ export const DeckContext = createContext<any>(null);
 
 export const DECK_ACTIONS = {
   NEW_DECK: "newDeck",
+  EDIT_DECK: "editDeck",
   DELETE_DECK: "deleteDeck",
   NEW_CARD: "newCard",
   DELETE_CARD: "deleteCard",
@@ -42,6 +43,7 @@ const createDeck = (
   };
 };
 
+// Deck Reducer
 const deckReducer = (state: Deck[], action: DeckReducerAction) => {
   console.log("deck reducer");
   switch (action.type) {
@@ -100,6 +102,18 @@ const deckReducer = (state: Deck[], action: DeckReducerAction) => {
         ...state,
         createDeck(action.deckBones.name, action.deckBones.description),
       ];
+    case DECK_ACTIONS.EDIT_DECK:
+      if (!action.deckBones || action.deckBones.name.trim() === "") {
+        console.log("no infomation to create new deck");
+        return state;
+      }
+      return state.map((deck: Deck) => {
+        if (deck.id === action.deckId && action.deckBones) {
+          deck.name = action.deckBones.name;
+          deck.description = action.deckBones.description;
+        }
+        return deck;
+      });
     case DECK_ACTIONS.DELETE_DECK:
       return state.filter((deck) => {
         return deck.id !== action.deckId;
