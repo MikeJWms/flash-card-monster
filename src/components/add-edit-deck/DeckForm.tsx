@@ -1,17 +1,39 @@
 /*
+Form used to add or edit a deck's name or description
 example usage:
-  <AddDeckForm />
+  import DeckForm, {Submit} from ...
+  <DeckForm />
   <Button onClick={Submit}>+ Add Deck</Button>
 */
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import Input from "../Input";
 
 import { DeckContext, DECK_ACTIONS } from "../../contexts/DeckContext";
 
 export default function AddDeckForm(props: {
+  deckId?: string;
   name?: string;
   description?: string;
 }) {
+  // deck context
+  const { deckState, deckContextDispatch } = useContext(DeckContext);
+
+  // local state
+  const [newDeckState, setNewDeckState] = useState({
+    name: props.name || "",
+    description: props.description || "",
+  });
+
+  // on first render, get deck info and load into state
+  useEffect(() => {
+    if (props.deckId) {
+      const { name, description } = deckState.find(
+        (deck: Deck) => deck.id === props.deckId
+      );
+      setNewDeckState({ name, description });
+    }
+  }, [deckState, props.deckId]);
+
   // input handeling
   const onInputChange = (event: any) => {
     // update local deck state
@@ -28,24 +50,23 @@ export default function AddDeckForm(props: {
     }
   };
 
-  // deck context
-  const { deckContextDispatch } = useContext(DeckContext);
-
   const submitAction = (e: FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("submitting adding new deck");
-    deckContextDispatch({
-      type: DECK_ACTIONS.NEW_DECK,
-      deckBones: newDeckState,
-    });
+    if (props.deckId) {
+      deckContextDispatch({
+        type: DECK_ACTIONS.UPDATE_DECK,
+        deckBones: newDeckState,
+        deckId: props.deckId,
+      });
+    } else {
+      deckContextDispatch({
+        type: DECK_ACTIONS.NEW_DECK,
+        deckBones: newDeckState,
+      });
+    }
     return false;
   };
-
-  const [newDeckState, setNewDeckState] = useState({
-    name: props.name || "",
-    description: props.description || "",
-  });
 
   return (
     <form id="add-deck" name="add-deck" onSubmit={submitAction}>

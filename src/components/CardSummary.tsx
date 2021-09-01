@@ -6,7 +6,8 @@ import {
   PencilAltIcon,
 } from "@heroicons/react/outline";
 import { Popover } from "@headlessui/react";
-
+import ModalController, { useModal } from "./modal/ModalController";
+import AddCardForm, { Submit } from "./add-edit-card/CardForm";
 
 export default function CardSummary(props: { card: Card; deckId: string }) {
   const { card } = props;
@@ -17,6 +18,9 @@ export default function CardSummary(props: { card: Card; deckId: string }) {
   const back1 = card.back[0] ? card.back[0] : " ‎";
   const back2 = card.back[1] ? card.back[1] : " ‎";
 
+  // used to show modal
+  const { showModal, setShowModal, handleModalClose } = useModal();
+
   return (
     <div className="mx-2 my-2 p-4 border w-72 inline-block rounded-lg cursor-pointer relative hover:shadow">
       <Popover className="relative">
@@ -24,10 +28,20 @@ export default function CardSummary(props: { card: Card; deckId: string }) {
           <DotsHorizontalIcon className={`h-6 text-gray-600`} />
         </Popover.Button>
 
+        <ModalController
+          title="Edit Deck"
+          show={showModal}
+          submitAction={Submit}
+          updateShowState={handleModalClose}
+          submitButtonText="Update Deck"
+        >
+          <AddCardForm deckId={props.deckId} cardId={props.card.id} />
+        </ModalController>
         <Popover.Panel className="absolute z-10 w-auto right-0 top-0 rounded-md border border-gray-300 shadow-md px-2 py-2 bg-white text-base">
-          {/* <button
+          <button
             onClick={() => {
               console.log("Edit button was pressed");
+              setShowModal(true);
             }}
             className="text-gray-600 px-2 py-1 mb-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-75 hover:bg-gray-100 flex"
           >
@@ -35,7 +49,7 @@ export default function CardSummary(props: { card: Card; deckId: string }) {
               <PencilAltIcon className="w-6" />
             </span>
             Edit
-          </button> */}
+          </button>
           <button
             onClick={() => {
               // delete card

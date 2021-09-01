@@ -1,6 +1,6 @@
 import Button from "../Button";
 import ModalController, { useModal } from "../modal/ModalController";
-import AddCardForm, { Submit } from "./AddCardForm";
+import AddCardForm, { Submit } from "./CardForm";
 
 export default function AddCardModal(props: {
   deckId: string;

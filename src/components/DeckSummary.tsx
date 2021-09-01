@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { DeckContext, DECK_ACTIONS } from "../contexts/DeckContext";
 import {
@@ -9,7 +9,7 @@ import {
 import { Popover } from "@headlessui/react";
 
 import ModalController, { useModal } from "./modal/ModalController";
-import EditDeckForm, { Submit } from "./add-edit-deck/EditDeckForm";
+import AddDeckForm, { Submit } from "./add-edit-deck/DeckForm";
 
 export default function DeckSummary(props: { deck: Deck }) {
   const { deck } = props;
@@ -37,7 +37,7 @@ export default function DeckSummary(props: { deck: Deck }) {
         updateShowState={handleModalClose}
         submitButtonText="Update Deck"
       >
-        <EditDeckForm deckId={deck.id} />
+        <AddDeckForm deckId={deck.id} />
       </ModalController>
       <Popover className="relative">
         {({ open }) => (

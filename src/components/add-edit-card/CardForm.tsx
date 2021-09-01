@@ -1,14 +1,37 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Input from "../Input";
 
 import { DeckContext, DECK_ACTIONS } from "../../contexts/DeckContext";
 
-export default function AddCard(props: { deckId: string, front?: [string, string], back?: [string, string] }) {
+export default function AddCard(props: {
+  deckId: string;
+  cardId?: string;
+  front?: [string, string];
+  back?: [string, string];
+}) {
+  // deck context
+  const { deckState, deckContextDispatch } = useContext(DeckContext);
   // local state
   const [newCardState, setNewCardState] = useState({
     front: props.front || ["", ""],
     back: props.back || ["", ""],
   });
+
+  //if prop.cardId is != null, populate local state with context
+  useEffect(() => {
+    if (props.cardId) {
+      //find deck
+      const deck: Deck = deckState.find(
+        (deck: Deck) => deck.id === props.deckId
+      );
+      const card = deck.cards.find((card: Card) => card.id === props.cardId);
+      if (card)
+        setNewCardState({
+          front: [card.front[0], card.front[1]],
+          back: [card.back[0], card.back[1]],
+        });
+    }
+  }, [deckState, props.cardId, props.deckId]);
 
   // input handeling - update local state
   const onInputChange = (event: any) => {
@@ -33,14 +56,24 @@ export default function AddCard(props: { deckId: string, front?: [string, string
     }
   };
 
-  // deck context
-  const { deckContextDispatch } = useContext(DeckContext);
   const submitAction = () => {
-    deckContextDispatch({
-      type: DECK_ACTIONS.NEW_CARD,
-      deckId: props.deckId,
-      cardBones: newCardState,
-    });
+    // if there is a cardId, update the card
+    if (props.cardId) {
+      deckContextDispatch({
+        type: DECK_ACTIONS.UPDATE_CARD,
+        deckId: props.deckId,
+        cardId: props.cardId,
+        cardBones: newCardState,
+      });
+    }
+    // if there is no cardId, add the card
+    else {
+      deckContextDispatch({
+        type: DECK_ACTIONS.NEW_CARD,
+        deckId: props.deckId,
+        cardBones: newCardState,
+      });
+    }
   };
 
   return (

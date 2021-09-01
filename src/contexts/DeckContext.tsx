@@ -11,9 +11,10 @@ export const DeckContext = createContext<any>(null);
 
 export const DECK_ACTIONS = {
   NEW_DECK: "newDeck",
-  EDIT_DECK: "editDeck",
+  UPDATE_DECK: "editDeck",
   DELETE_DECK: "deleteDeck",
   NEW_CARD: "newCard",
+  UPDATE_CARD: "updateCard",
   DELETE_CARD: "deleteCard",
 };
 
@@ -69,6 +70,34 @@ const deckReducer = (state: Deck[], action: DeckReducerAction) => {
           return deck;
         }),
       ];
+    case DECK_ACTIONS.UPDATE_CARD:
+      if (!action.cardId) {
+        console.log("cardId must be provided");
+        return state;
+      } else {
+        console.log("Updating this card: ", action.cardId);
+        return [
+          ...state.map((deck: Deck) => {
+            if (deck.id === action.deckId) {
+              return {
+                name: deck.name,
+                description: deck.description,
+                id: deck.id,
+                cards: deck.cards.map((card: Card) => {
+                  if (card.id === action.cardId && action.cardBones) {
+                    card.front = action.cardBones.front;
+                    card.back = action.cardBones.back;
+                  }
+                  return card;
+                }),
+              };
+            } else {
+              console.log("no deck with that ID found");
+            }
+            return deck;
+          }),
+        ];
+      }
     case DECK_ACTIONS.DELETE_CARD:
       if (!action.cardId) {
         console.log("no cardId provided");
@@ -84,7 +113,9 @@ const deckReducer = (state: Deck[], action: DeckReducerAction) => {
                 name: deck.name,
                 description: deck.description,
                 id: deck.id,
-                cards: deck.cards.filter((cardd) => cardd.id !== action.cardId),
+                cards: deck.cards.filter(
+                  (card: Card) => card.id !== action.cardId
+                ),
               };
             } else {
               console.log("no deck with that ID found");
@@ -102,7 +133,7 @@ const deckReducer = (state: Deck[], action: DeckReducerAction) => {
         ...state,
         createDeck(action.deckBones.name, action.deckBones.description),
       ];
-    case DECK_ACTIONS.EDIT_DECK:
+    case DECK_ACTIONS.UPDATE_DECK:
       if (!action.deckBones || action.deckBones.name.trim() === "") {
         console.log("no infomation to create new deck");
         return state;

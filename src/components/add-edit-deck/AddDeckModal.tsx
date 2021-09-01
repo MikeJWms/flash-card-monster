@@ -1,6 +1,6 @@
 import Button from "../Button";
 import ModalController, { useModal } from "../modal/ModalController";
-import AddDeckForm, { Submit } from "./AddDeckForm";
+import AddDeckForm, { Submit } from "./DeckForm";
 
 export default function AddDeckModal(props: {
   button?: {
