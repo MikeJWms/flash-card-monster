@@ -18,13 +18,10 @@ export const DECK_ACTIONS = {
   DELETE_CARD: "deleteCard",
 };
 
-const createCard = (
-  front: string[] = ["Default Front, line 1", "Default Front, line 2"],
-  back: string[] = ["Default Back, line 1", "Default Back, line 2"]
-): Card => {
+const createCard = (cardBones: CardBones): Card => {
   const newCard = {
-    front,
-    back,
+    front: cardBones.front,
+    back: cardBones.back,
     id: uuid(),
   };
   console.log(newCard);
@@ -60,10 +57,10 @@ const deckReducer = (state: Deck[], action: DeckReducerAction) => {
               id: deck.id,
               cards: [
                 ...deck.cards,
-                createCard(
-                  [...action.cardBones.front],
-                  [...action.cardBones.back]
-                ),
+                createCard({
+                  front: action.cardBones.front,
+                  back: action.cardBones.back,
+                }),
               ],
             };
           }
@@ -162,38 +159,33 @@ const initialDeckState = ((): Deck[] => {
           "Tutorial",
           "Learn how to use FlashCard.Monster - Click here!",
           [
-            createCard(
-              ["Welcome to Flash Card Monster", ""],
-              [
-                "‎The fastest way to make flash cards",
-                "for studdying and memory recall.",
-              ]
-            ),
-            createCard(
-              ["Flash Card Monster makes it easy to create flash cards", ""],
-              ["", ""]
-            ),
-            createCard(
-              ["Create new flash card decks!", ""],
-              ["Click “+ Add Deck” to get started.", ""]
-            ),
-            createCard(
-              ["Create and organize your flash cards", ""],
-              [
-                "Click “+ Add Card” to create new cards.",
-                "Don't worry, you can leave and come back, your work will still be here!",
-              ]
-            ),
-            createCard(
-              [
+            createCard({
+              front:
+                "# An h1 header\n## An h2 header\n### An h3 header\n#### An h4 header\n##### An h5 header\n###### An h6 header\nParagraph text",
+              back: "",
+            }),
+            createCard({
+              front:
+                "Welcome to Flash Card Monster the fastest way to make flash cards for studdying and memory recall.",
+              back: "",
+            }),
+            createCard({
+              front: "Flash Card Monster makes it easy to create flash cards",
+              back: "",
+            }),
+            createCard({
+              front: "Create new flash card decks!",
+              back: "Click “+ Add Deck” to get started.",
+            }),
+            createCard({
+              front: "Create and organize your flash cards",
+              back: "Click “+ Add Card” to create new cards. Don't worry, you can leave and come back, your work will still be here!",
+            }),
+            createCard({
+              front:
                 "When it’s time to start studying, click “Play” to review your flash cards one at a time.",
-                "",
-              ],
-              [
-                "Navigate back to your decks at any time by clicking the Logo.",
-                "",
-              ]
-            ),
+              back: "Navigate back to your decks at any time by clicking the Logo.",
+            }),
           ]
         ),
       ];

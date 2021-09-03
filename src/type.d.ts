@@ -1,6 +1,10 @@
 interface CardBones {
-  front: string[]
-  back: string[]
+  front: string
+  back: string
+}
+
+interface Card extends CardBones {
+  id: string
 }
 
 interface DeckBones {
@@ -8,15 +12,7 @@ interface DeckBones {
   description: string
 }
 
-interface Card {
-  front: string[]
-  back: string[]
-  id: string
-}
-
-type Deck = {
-  name: string
-  description: string
+interface Deck extends DeckBones {
   id: string,
   cards: Card[]
 }

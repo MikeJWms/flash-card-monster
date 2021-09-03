@@ -9,20 +9,20 @@ import { Popover } from "@headlessui/react";
 import ModalController, { useModal } from "./modal/ModalController";
 import AddCardForm, { Submit } from "./add-edit-card/CardForm";
 
+import Markdown from "markdown-to-jsx";
+
 export default function CardSummary(props: { card: Card; deckId: string }) {
   const { card } = props;
   const { deckContextDispatch } = useContext(DeckContext);
 
-  const front1 = card.front[0] ? card.front[0] : " ‎";
-  const front2 = card.front[1] ? card.front[1] : " ‎";
-  const back1 = card.back[0] ? card.back[0] : " ‎";
-  const back2 = card.back[1] ? card.back[1] : " ‎";
+  const front = card.front ? card.front : " ‎";
+  const back = card.back ? card.back : " ‎";
 
   // used to show modal
   const { showModal, setShowModal, handleModalClose } = useModal();
 
   return (
-    <div className="mx-2 my-2 p-4 border w-72 inline-block rounded-lg cursor-pointer relative hover:shadow">
+    <div className="mx-2 my-2 p-4 border w-full inline-block rounded-lg cursor-pointer relative hover:shadow">
       <Popover className="relative">
         <Popover.Button className={`absolute right-0 top-0 rounded-lg`}>
           <DotsHorizontalIcon className={`h-6 text-gray-600`} />
@@ -70,10 +70,8 @@ export default function CardSummary(props: { card: Card; deckId: string }) {
       </Popover>
 
       <div>
-        <p className="text-xl">{front1}</p>
-        <p className="text-sm text-gray-600 mb-2">{front2}</p>
-        <p className="text-xl">{back1}</p>
-        <p className="text-sm text-gray-600 mb-2">{back2}</p>
+        <Markdown className="prose">{front}</Markdown>
+        <Markdown className="prose">{back}</Markdown>
       </div>
     </div>
   );

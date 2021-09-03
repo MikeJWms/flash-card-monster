@@ -1,4 +1,5 @@
 import { Transition } from "@headlessui/react";
+import Markdown from "markdown-to-jsx";
 import { useEffect, useRef, useState } from "react";
 
 export default function Card(props: {
@@ -46,10 +47,7 @@ export default function Card(props: {
               <div id="front" className="grid grid-cols-1 grid-rows-3 h-full">
                 <span className="font-semibold text-gray-400">Question</span>
                 <div className="row-start-2 text-center">
-                  <p className="font-semibold text-xl">
-                    {showingCard.front[0]}
-                  </p>
-                  <p>{showingCard.front[1]}</p>
+                  <Markdown>{showingCard.front}</Markdown>
                 </div>
               </div>
             )}
@@ -58,8 +56,7 @@ export default function Card(props: {
               <div id="back" className="grid grid-cols-1 grid-rows-3 h-full">
                 <span className="font-semibold text-gray-400">Answer</span>
                 <div className="row-start-2 text-center">
-                  <p>{showingCard.back[0]}</p>
-                  <p>{showingCard.back[1]}</p>
+                  <Markdown>{showingCard.back}</Markdown>
                 </div>
               </div>
             )}

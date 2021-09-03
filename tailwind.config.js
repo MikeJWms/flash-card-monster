@@ -3,9 +3,13 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      rotate:{
-        
-      }
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+
+          },
+        },
+      })
     },
   },
   variants: {
@@ -13,6 +17,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
-    require('@tailwindcss/aspect-ratio')
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/typography')
   ],
 }

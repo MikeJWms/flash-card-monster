@@ -1,20 +1,19 @@
 import { useContext, useEffect, useState } from "react";
-import Input from "../Input";
 
 import { DeckContext, DECK_ACTIONS } from "../../contexts/DeckContext";
 
 export default function AddCard(props: {
   deckId: string;
   cardId?: string;
-  front?: [string, string];
-  back?: [string, string];
+  front?: string;
+  back?: string;
 }) {
   // deck context
   const { deckState, deckContextDispatch } = useContext(DeckContext);
   // local state
   const [newCardState, setNewCardState] = useState({
-    front: props.front || ["", ""],
-    back: props.back || ["", ""],
+    front: props.front || "",
+    back: props.back || "",
   });
 
   //if prop.cardId is != null, populate local state with context
@@ -27,8 +26,8 @@ export default function AddCard(props: {
       const card = deck.cards.find((card: Card) => card.id === props.cardId);
       if (card)
         setNewCardState({
-          front: [card.front[0], card.front[1]],
-          back: [card.back[0], card.back[1]],
+          front: card.front,
+          back: card.back,
         });
     }
   }, [deckState, props.cardId, props.deckId]);
@@ -37,20 +36,12 @@ export default function AddCard(props: {
   const onInputChange = (event: any) => {
     const updatedNewCardData = { ...newCardState };
     switch (event.target.id) {
-      case "front-line1":
-        updatedNewCardData.front[0] = event.target.value;
+      case "front":
+        updatedNewCardData.front = event.target.value;
         setNewCardState(updatedNewCardData);
         break;
-      case "front-line2":
-        updatedNewCardData.front[1] = event.target.value;
-        setNewCardState(updatedNewCardData);
-        break;
-      case "back-line1":
-        updatedNewCardData.back[0] = event.target.value;
-        setNewCardState(updatedNewCardData);
-        break;
-      case "back-line2":
-        updatedNewCardData.back[1] = event.target.value;
+      case "back":
+        updatedNewCardData.back = event.target.value;
         setNewCardState(updatedNewCardData);
         break;
     }
@@ -78,32 +69,26 @@ export default function AddCard(props: {
 
   return (
     <form id="add-card" name="add-card" onSubmit={submitAction}>
-      <p>Card Front</p>
-      <Input
-        id="front-line1"
-        placeholder="Line 1"
-        inputOnChange={onInputChange}
-        value={newCardState.front[0]}
-      />
-      <Input
-        id="front-line2"
-        placeholder="Line 2"
-        inputOnChange={onInputChange}
-        value={newCardState.front[1]}
-      />
-      <p>Card Back</p>
-      <Input
-        id="back-line1"
-        placeholder="Line 1"
-        inputOnChange={onInputChange}
-        value={newCardState.back[0]}
-      />
-      <Input
-        id="back-line2"
-        placeholder="Line 2"
-        inputOnChange={onInputChange}
-        value={newCardState.back[1]}
-      />
+      <div className="mt-3">
+        <label htmlFor="front">Card Front</label>
+        <textarea
+          id="front"
+          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-4 pr-8 sm:text-sm border-gray-300 rounded-md"
+          placeholder=""
+          onChange={onInputChange}
+          value={newCardState.front}
+        />
+      </div>
+      <div className="mt-3">
+        <label htmlFor="back">Card Back</label>
+        <textarea
+          id="back"
+          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-4 pr-8 sm:text-sm border-gray-300 rounded-md"
+          placeholder=""
+          onChange={onInputChange}
+          value={newCardState.back}
+        />
+      </div>
     </form>
   );
 }
