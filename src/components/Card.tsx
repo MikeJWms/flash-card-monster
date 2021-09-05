@@ -6,7 +6,7 @@ export default function Card(props: {
   card: Card;
   className?: string;
   flip?: Boolean;
-  index?: number;
+  index: number;
 }) {
   const isFirstRender = useRef(true);
 
@@ -31,15 +31,31 @@ export default function Card(props: {
     }
   }, [props.card, animationInterval]);
 
+  const prevIndex = useRef(0);
+  const flipForward = useRef(true);
+
+  useEffect(() => {
+    if (props.index > prevIndex.current) {
+      flipForward.current = true;
+    } else {
+      flipForward.current = false;
+    }
+    prevIndex.current = props.index;
+  }, [props.index]);
+
   return (
     <Transition
       show={isShow}
       enter={`transition ease-out duration-${animationInterval}`}
-      enterFrom="transform opacity-75 scale-95 translate-x-1/2"
+      enterFrom={`transform opacity-75 scale-95 ${
+        flipForward.current ? "" : "-"
+      }translate-x-1/2`}
       enterTo="transform opacity-100 scale-100"
       leave={`transition ease-in duration-${animationInterval}`}
       leaveFrom="transform opacity-100 scale-100"
-      leaveTo="transform opacity-0 scale-95 -translate-x-1/2"
+      leaveTo={`transform opacity-0 scale-95 ${
+        flipForward.current ? "-" : ""
+      }translate-x-1/2`}
     >
       <div className={`max-w-lg ${props.className}`}>
         <div className="sm:aspect-w-9 sm:aspect-h-14 md:aspect-w-14 md:aspect-h-9">

@@ -11,6 +11,7 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
   ArrowUpIcon,
+  ReplyIcon,
 } from "@heroicons/react/outline";
 
 export default function StudyMode(props: {}) {
@@ -104,19 +105,27 @@ export default function StudyMode(props: {}) {
     >
       <div className="mb-4 pt-4 pl-4 col-span-2">
         <h1 className="text-xl">Let's Study</h1>
-        <p>{`${selectedCard}/${numberOfCards}`} Cards</p>
+        <p>{`${1 + selectedCard}/${numberOfCards}`} Cards</p>
       </div>
       <button
         className="row-start-3 md:row-start-2 col-start-1 mr-auto p-8 mt-auto mb-2 md:mb-0 md:mt-0"
         onClick={() => changeCard(-1)}
       >
-        <ArrowLeftIcon className="w-8" />
+        {selectedCard === 0 ? (
+          <ReplyIcon className="w-8 transform rotate-180" />
+        ) : (
+          <ArrowLeftIcon className="w-8" />
+        )}
       </button>
       <button
         className="row-start-3 md:row-start-2 col-start-3 ml-auto p-8 mt-auto mb-2 md:mb-0 md:mt-0"
         onClick={() => changeCard(1)}
       >
-        <ArrowRightIcon className="w-8" />
+        {selectedCard + 1 >= numberOfCards ? (
+          <ReplyIcon className="w-8" />
+        ) : (
+          <ArrowRightIcon className="w-8" />
+        )}
       </button>
       <Button
         className="mt-auto mb-8 row-start-3 col-start-2 justify-self-center w-full max-w-xs"
@@ -130,6 +139,7 @@ export default function StudyMode(props: {}) {
           card={selectedDeck.cards[selectedCard]}
           className="mx-auto"
           flip={flip}
+          index={selectedCard}
         />
       </div>
     </div>
