@@ -160,31 +160,26 @@ const initialDeckState = ((): Deck[] => {
           "Learn how to use FlashCard.Monster - Click here!",
           [
             createCard({
-              front:
-                "# An h1 header\n## An h2 header\n### An h3 header\n#### An h4 header\n##### An h5 header\n###### An h6 header\nParagraph text",
-              back: "",
+              front: "### Welcome to Flash Card Monster",
+              back: "### the fastest way to make flash cards for studdying and memory recall.",
             }),
             createCard({
               front:
-                "Welcome to Flash Card Monster the fastest way to make flash cards for studdying and memory recall.",
+                "### Flash Card Monster makes it easy to create flash cards",
               back: "",
             }),
             createCard({
-              front: "Flash Card Monster makes it easy to create flash cards",
-              back: "",
+              front: "### Create new flash card decks!",
+              back: "### Click “+ Add Deck” to get started.",
             }),
             createCard({
-              front: "Create new flash card decks!",
-              back: "Click “+ Add Deck” to get started.",
-            }),
-            createCard({
-              front: "Create and organize your flash cards",
-              back: "Click “+ Add Card” to create new cards. Don't worry, you can leave and come back, your work will still be here!",
+              front: "### Create and organize your flash cards",
+              back: "### Click “+ Add Card” to create new cards. Don't worry, you can leave and come back, your work will still be here!",
             }),
             createCard({
               front:
-                "When it’s time to start studying, click “Play” to review your flash cards one at a time.",
-              back: "Navigate back to your decks at any time by clicking the Logo.",
+                "### When it’s time to start studying, click “Play” to review your flash cards one at a time.",
+              back: "### Navigate back to your decks at any time by clicking the Logo.",
             }),
           ]
         ),

@@ -15,16 +15,16 @@ export default function CardSummary(props: { card: Card; deckId: string }) {
   const { card } = props;
   const { deckContextDispatch } = useContext(DeckContext);
 
-  const front = card.front ? card.front : " ‎";
-  const back = card.back ? card.back : " ‎";
+  const front = card.front ? card.front : "‎";
+  const back = card.back ? card.back : "‎";
 
   // used to show modal
   const { showModal, setShowModal, handleModalClose } = useModal();
 
   return (
-    <div className="mx-2 my-2 p-4 border w-full inline-block rounded-lg cursor-pointer relative hover:shadow">
+    <div className="mx-2 my-2 p-4 border w-96 inline-block rounded-lg cursor-pointer relative hover:shadow">
       <Popover className="relative">
-        <Popover.Button className={`absolute right-0 top-0 rounded-lg`}>
+        <Popover.Button className={`float-right ml-6 mb-4 rounded-lg`}>
           <DotsHorizontalIcon className={`h-6 text-gray-600`} />
         </Popover.Button>
 
@@ -69,9 +69,9 @@ export default function CardSummary(props: { card: Card; deckId: string }) {
         </Popover.Panel>
       </Popover>
 
-      <div>
-        <Markdown className="prose">{front}</Markdown>
-        <Markdown className="prose">{back}</Markdown>
+      <div className="prose-sm">
+        <Markdown className="block">{front}</Markdown>
+        {back.length > 1 && <Markdown className="block">{back}</Markdown>}
       </div>
     </div>
   );

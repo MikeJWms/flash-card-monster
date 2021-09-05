@@ -6,6 +6,7 @@ export default function Card(props: {
   card: Card;
   className?: string;
   flip?: Boolean;
+  index?: number
 }) {
   const isFirstRender = useRef(true);
 
