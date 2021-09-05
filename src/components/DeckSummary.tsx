@@ -42,7 +42,7 @@ export default function DeckSummary(props: { deck: Deck }) {
       <Popover className="relative">
         {({ open }) => (
           <>
-            <Popover.Button className={`absolute right-0 top-0 rounded-lg`}>
+            <Popover.Button className={`float-right rounded-lg`}>
               <DotsHorizontalIcon className={`h-6 text-gray-600`} />
             </Popover.Button>
             <Popover.Overlay
