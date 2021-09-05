@@ -6,7 +6,7 @@ export default function Card(props: {
   card: Card;
   className?: string;
   flip?: Boolean;
-  index?: number
+  index?: number;
 }) {
   const isFirstRender = useRef(true);
 
@@ -47,7 +47,7 @@ export default function Card(props: {
             {!props.flip && (
               <div id="front" className="grid grid-cols-1 grid-rows-3 h-full">
                 <span className="font-semibold text-gray-400">Question</span>
-                <div className="row-start-2 text-center">
+                <div className="row-start-2 text-center prose-sm my-auto">
                   <Markdown>{showingCard.front}</Markdown>
                 </div>
               </div>
@@ -56,7 +56,7 @@ export default function Card(props: {
             {props.flip && (
               <div id="back" className="grid grid-cols-1 grid-rows-3 h-full">
                 <span className="font-semibold text-gray-400">Answer</span>
-                <div className="row-start-2 text-center">
+                <div className="row-start-2 text-center prose-sm my-auto">
                   <Markdown>{showingCard.back}</Markdown>
                 </div>
               </div>
