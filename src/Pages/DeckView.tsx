@@ -55,7 +55,7 @@ export default function DeckView() {
       </div>
       <p>{selectedDeck.description}</p>
 
-      <div>
+      <div className="flex flex-wrap">
         {selectedDeck.cards.map((card: Card) => {
           return <CardSummary key={card.id} card={card} deckId={id} />;
         })}

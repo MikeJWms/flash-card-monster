@@ -69,9 +69,9 @@ export default function CardSummary(props: { card: Card; deckId: string }) {
         </Popover.Panel>
       </Popover>
 
-      <div className="prose-sm">
+      <div className="prose-sm flex flex-col h-full justify-center">
         <Markdown className="block">{front}</Markdown>
-        {back.length > 1 && <Markdown className="block">{back}</Markdown>}
+        {back.length > 1 && <Markdown className="block pt-4">{back}</Markdown>}
       </div>
     </div>
   );
