@@ -19,9 +19,16 @@ export default function StudyMode(props: {}) {
   const { deckState } = useContext(DeckContext);
 
   // Get the selected deck from the id parameter
-  const selectedDeck: Deck | null = useMemo(() => {
-    return deckState.find((element: Deck) => element.id === id);
-  }, [id, deckState]);
+  const selectedDeck: Deck | null = useMemo(
+    () => deckState.get(id),
+    [id, deckState]
+  );
+
+  // convert cardmap to array which can be trversed by component
+  const cardArray: [string, Card][] | null = useMemo(
+    () => (selectedDeck ? [...selectedDeck.cards] : null),
+    [selectedDeck]
+  );
 
   // card flip state & logic
   const [flip, setFlip] = useState(false);
@@ -31,10 +38,12 @@ export default function StudyMode(props: {}) {
 
   // selecting a card to render
   const numberOfCards = useMemo(() => {
-    if (selectedDeck) return selectedDeck.cards.length;
+    if (selectedDeck) return selectedDeck.cards.size;
     else return 0;
   }, [selectedDeck]);
+
   const [selectedCard, setSelectedCard] = useState(0);
+
   const changeCard = useCallback(
     (steps: number) => {
       let newIndex = selectedCard + steps;
@@ -135,12 +144,14 @@ export default function StudyMode(props: {}) {
         <ArrowUpIcon className="hidden md:inline h-4 ml-4 text-blue-400" />
       </Button>
       <div className="col-span-3 md:col-span-1 m-4 md:m-0 row-start-2 md:col-start-2 self-center">
-        <Card
-          card={selectedDeck.cards[selectedCard]}
-          className="mx-auto"
-          flip={flip}
-          index={selectedCard}
-        />
+        {cardArray && (
+          <Card
+            card={cardArray[selectedCard][1]}
+            className="mx-auto"
+            flip={flip}
+            index={selectedCard}
+          />
+        )}
       </div>
     </div>
   );

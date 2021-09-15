@@ -4,6 +4,7 @@ import DeckSummary from "../components/DeckSummary";
 import { BUTTON_THEME, BUTTON_SIZE } from "../components/Button";
 import DefaultLayout from "../layouts/DefaultLayout";
 import AddDeckModal from "../components/add-edit-deck/AddDeckModal";
+import { mapMap } from "../helpers/jsMap";
 
 export default function Decks() {
   const { deckState } = useContext(DeckContext);
@@ -16,7 +17,7 @@ export default function Decks() {
           button={{ size: BUTTON_SIZE.SMALL, theme: BUTTON_THEME.SUCCESS }}
         />
       </div>
-      {deckState.map((deck: Deck) => {
+      {mapMap(deckState, (deck: Deck, key: string) => {
         return <DeckSummary key={deck.id} deck={deck}></DeckSummary>;
       })}
     </DefaultLayout>

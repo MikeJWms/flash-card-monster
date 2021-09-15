@@ -9,6 +9,7 @@ import DefaultLayout from "../layouts/DefaultLayout";
 import SelectedDeckNotFound from "../components/SelectedDeckNotFound";
 
 import AddCardModal from "../components/add-edit-card/AddCardModal";
+import { mapMap } from "../helpers/jsMap";
 
 export default function DeckView() {
   const { id } = useParams<{ id: string }>();
@@ -21,9 +22,7 @@ export default function DeckView() {
     return null;
   }
 
-  const selectedDeck: Deck = deckState.find(
-    (element: Deck) => element.id === id
-  );
+  const selectedDeck: Deck = deckState.get(id)
 
   if (!selectedDeck) {
     console.log("Deck not selected ", selectedDeck);
@@ -56,7 +55,7 @@ export default function DeckView() {
       <p>{selectedDeck.description}</p>
 
       <div className="flex flex-wrap">
-        {selectedDeck.cards.map((card: Card) => {
+        {mapMap(selectedDeck.cards, (card, key) => {
           return <CardSummary key={card.id} card={card} deckId={id} />;
         })}
       </div>

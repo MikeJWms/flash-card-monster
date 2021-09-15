@@ -18,17 +18,14 @@ export default function AddCard(props: {
 
   //if prop.cardId is != null, populate local state with context
   useEffect(() => {
-    if (props.cardId) {
-      //find deck
-      const deck: Deck = deckState.find(
-        (deck: Deck) => deck.id === props.deckId
-      );
-      const card = deck.cards.find((card: Card) => card.id === props.cardId);
-      if (card)
-        setNewCardState({
-          front: card.front,
-          back: card.back,
-        });
+    // find deck
+    const { cards } = deckState.get(props.deckId);
+
+    console.log("CardForm: ", cards);
+    // find card in deck
+    if (cards && props.cardId) {
+      const { front, back } = cards.get(props.cardId);
+      setNewCardState({ front, back });
     }
   }, [deckState, props.cardId, props.deckId]);
 
@@ -54,7 +51,7 @@ export default function AddCard(props: {
         type: DECK_ACTIONS.UPDATE_CARD,
         deckId: props.deckId,
         cardId: props.cardId,
-        cardBones: newCardState,
+        CardPrimitive: newCardState,
       });
     }
     // if there is no cardId, add the card
@@ -62,7 +59,7 @@ export default function AddCard(props: {
       deckContextDispatch({
         type: DECK_ACTIONS.NEW_CARD,
         deckId: props.deckId,
-        cardBones: newCardState,
+        CardPrimitive: newCardState,
       });
     }
   };

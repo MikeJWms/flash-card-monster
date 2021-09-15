@@ -27,9 +27,7 @@ export default function AddDeckForm(props: {
   // on first render, get deck info and load into state
   useEffect(() => {
     if (props.deckId) {
-      const { name, description } = deckState.find(
-        (deck: Deck) => deck.id === props.deckId
-      );
+      const { name, description } = deckState.get(props.deckId);
       setNewDeckState({ name, description });
     }
   }, [deckState, props.deckId]);

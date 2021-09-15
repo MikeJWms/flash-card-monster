@@ -89,7 +89,7 @@ export default function DeckSummary(props: { deck: Deck }) {
         }}
       >
         <p className="text-xl">{deck.name}</p>
-        <p className="text-sm text-gray-600 mb-2">{deck.cards.length} cards</p>
+        <p className="text-sm text-gray-600 mb-2">{deck.cards.size} cards</p>
         <p>{deck.description ? deck.description : " "}</p>
       </div>
     </div>

@@ -1,9 +1,11 @@
-interface CardBones {
+type DeckState = Map<string, Deck>
+
+interface CardPrimitive {
   front: string
   back: string
 }
 
-interface Card extends CardBones {
+interface Card extends CardPrimitive {
   id: string
 }
 
@@ -14,14 +16,14 @@ interface DeckBones {
 
 interface Deck extends DeckBones {
   id: string,
-  cards: Card[]
+  cards: Map<string, Card>
 }
 
 interface DeckReducerAction {
  type: string
  deckId: string
  cardId?: string
- cardBones?: CardBones
+ CardPrimitive?: CardPrimitive
  deckBones?: DeckBones
 }
 

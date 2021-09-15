@@ -18,21 +18,35 @@ export const DECK_ACTIONS = {
   DELETE_CARD: "deleteCard",
 };
 
-const createCard = (cardBones: CardBones): Card => {
+const createCard = (
+  CardPrimitive: CardPrimitive
+): { card: Card; id: string } => {
   const newCard = {
-    front: cardBones.front,
-    back: cardBones.back,
+    front: CardPrimitive.front,
+    back: CardPrimitive.back,
     id: uuid(),
   };
   console.log(newCard);
-  return newCard;
+  return { id: newCard.id, card: newCard };
+};
+
+const createCardMap = (cardPrimitives: CardPrimitive[]): Map<string, Card> => {
+  const map = new Map();
+  cardPrimitives.forEach((value) => {
+    const { id, card } = createCard({ front: value.front, back: value.back });
+    map.set(id, card);
+  });
+  return map;
 };
 
 const createDeck = (
   name: string = "Untitled Deck",
   description: string = "default description",
-  cards: Card[] = []
+  cards?: Map<string, Card>
 ): Deck => {
+  if (!cards) {
+    cards = new Map();
+  }
   return {
     name,
     description,
@@ -42,149 +56,126 @@ const createDeck = (
 };
 
 // Deck Reducer
-const deckReducer = (state: Deck[], action: DeckReducerAction) => {
-  console.log("deck reducer");
+const deckReducer = (state: DeckState, action: DeckReducerAction) => {
+  let newState: DeckState | null = null;
+
   switch (action.type) {
     case DECK_ACTIONS.NEW_CARD:
-      console.log("adding a card");
-      return [
-        ...state.map((deck: Deck) => {
-          if (!action.cardBones) console.log("no 'CardBones' cardBones");
-          else if (deck.id === action.deckId) {
-            return {
-              name: deck.name,
-              description: deck.description,
-              id: deck.id,
-              cards: [
-                ...deck.cards,
-                createCard({
-                  front: action.cardBones.front,
-                  back: action.cardBones.back,
-                }),
-              ],
-            };
-          }
-          return deck;
-        }),
-      ];
+      if (!action.deckId || !action.CardPrimitive) return state;
+      var { id, card } = createCard({
+        front: action.CardPrimitive.front,
+        back: action.CardPrimitive.back,
+      });
+      newState = new Map(state);
+      newState.get(action.deckId)?.cards.set(id, card);
+
+      return newState;
+
     case DECK_ACTIONS.UPDATE_CARD:
-      if (!action.cardId) {
-        console.log("cardId must be provided");
+      if (!action.deckId || !action.cardId || !action.CardPrimitive)
         return state;
-      } else {
-        console.log("Updating this card: ", action.cardId);
-        return [
-          ...state.map((deck: Deck) => {
-            if (deck.id === action.deckId) {
-              return {
-                name: deck.name,
-                description: deck.description,
-                id: deck.id,
-                cards: deck.cards.map((card: Card) => {
-                  if (card.id === action.cardId && action.cardBones) {
-                    card.front = action.cardBones.front;
-                    card.back = action.cardBones.back;
-                  }
-                  return card;
-                }),
-              };
-            } else {
-              console.log("no deck with that ID found");
-            }
-            return deck;
-          }),
-        ];
-      }
+
+      newState = new Map(state);
+      newState.get(action.deckId)?.cards.set(action.cardId, {
+        id: action.cardId,
+        ...action.CardPrimitive,
+      });
+
+      return newState;
+
     case DECK_ACTIONS.DELETE_CARD:
-      if (!action.cardId) {
-        console.log("no cardId provided");
-        return state;
-      } else {
-        console.log("Deleting this card: ", action.cardId);
-        return [
-          ...state.map((deck: Deck) => {
-            console.log("Im logging from inside a function");
-            console.log(deck.cards.filter((v) => true));
-            if (deck.id === action.deckId) {
-              return {
-                name: deck.name,
-                description: deck.description,
-                id: deck.id,
-                cards: deck.cards.filter(
-                  (card: Card) => card.id !== action.cardId
-                ),
-              };
-            } else {
-              console.log("no deck with that ID found");
-            }
-            return deck;
-          }),
-        ];
-      }
+      if (!action.deckId || !action.cardId) return state;
+
+      newState = new Map(state);
+      newState.get(action.deckId)?.cards.delete(action.cardId);
+
+      return newState;
     case DECK_ACTIONS.NEW_DECK:
       if (!action.deckBones || action.deckBones.name.trim() === "") {
         console.log("no infomation to create new deck");
         return state;
       }
-      return [
-        ...state,
-        createDeck(action.deckBones.name, action.deckBones.description),
-      ];
+      // create new with existing state
+      newState = new Map(state);
+      const newDeck = createDeck(
+        action.deckBones.name,
+        action.deckBones.description
+      );
+      newState.set(newDeck.id, newDeck);
+
+      return newState;
+
     case DECK_ACTIONS.UPDATE_DECK:
-      if (!action.deckBones || action.deckBones.name.trim() === "") {
+      if (
+        !action.deckId ||
+        !action.deckBones ||
+        action.deckBones.name.trim() === ""
+      ) {
         console.log("no infomation to create new deck");
         return state;
       }
-      return state.map((deck: Deck) => {
-        if (deck.id === action.deckId && action.deckBones) {
-          deck.name = action.deckBones.name;
-          deck.description = action.deckBones.description;
-        }
-        return deck;
-      });
+      newState = new Map(state);
+      const updateDeck = newState.get(action.deckId);
+      if (!updateDeck) return state;
+      updateDeck.name = action.deckBones.name;
+      updateDeck.description = action.deckBones.description;
+
+      return newState.set(action.deckId, updateDeck);
+
     case DECK_ACTIONS.DELETE_DECK:
-      return state.filter((deck) => {
-        return deck.id !== action.deckId;
-      });
+      if (!action.deckId) {
+        console.log("can't delete a deck without its ID");
+        return state;
+      }
+      newState = new Map(state);
+      newState.delete(action.deckId);
+      return newState;
     default:
       return state;
   }
 };
 
-const initialDeckState = ((): Deck[] => {
-  const initial = getLocalSotrageItem(LOCAL_STORAGE_KEYS.DECK_STATE)
-    ? getLocalSotrageItem(LOCAL_STORAGE_KEYS.DECK_STATE)
-    : [
-        createDeck(
+const initialDeckState = ((): DeckState => {
+  const stateFromLocalStorage = getLocalSotrageItem(
+    LOCAL_STORAGE_KEYS.DECK_STATE
+  );
+  const newState = stateFromLocalStorage
+    ? stateFromLocalStorage
+    : (() => {
+        const defaut = createDeck(
           "Tutorial",
           "Learn how to use FlashCard.Monster - Click here!",
-          [
-            createCard({
+          createCardMap([
+            {
               front: "### Welcome to Flash Card Monster",
               back: "### the fastest way to make flash cards for studdying and memory recall.",
-            }),
-            createCard({
+            },
+            {
               front:
                 "### Flash Card Monster makes it easy to create flash cards",
               back: "",
-            }),
-            createCard({
+            },
+            {
               front: "### Create new flash card decks!",
               back: "### Click “+ Add Deck” to get started.",
-            }),
-            createCard({
+            },
+            {
               front: "### Create and organize your flash cards",
               back: "### Click “+ Add Card” to create new cards. Don't worry, you can leave and come back, your work will still be here!",
-            }),
-            createCard({
+            },
+            {
               front:
                 "### When it’s time to start studying, click “Play” to review your flash cards one at a time.",
               back: "### Navigate back to your decks at any time by clicking the Logo.",
-            }),
-          ]
-        ),
-      ];
-  return initial;
+            },
+          ])
+        );
+
+        return new Map().set(defaut.id, defaut);
+      })();
+  setLocalSotrageItem(LOCAL_STORAGE_KEYS.DECK_STATE, newState);
+
+  return newState;
 })();
 
 export const DeckContextProvider = (props: any) => {
