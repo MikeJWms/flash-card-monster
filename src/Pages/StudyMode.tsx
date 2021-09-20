@@ -105,11 +105,11 @@ export default function StudyMode(props: {}) {
 
   return (
     <div
-      className="grid"
+      className="grid overflow-hidden"
       style={{
         height: `calc(100vh - ${navHeight}px)`,
-        gridTemplateRows: "1fr minmax(0, 2fr) 1fr",
-        gridTemplateColumns: "1fr minmax(0, 2fr) 1fr",
+        gridTemplateRows: "1fr minmax(0, 4fr) 1fr",
+        gridTemplateColumns: "1fr minmax(0, 4fr) 1fr"
       }}
     >
       <div className="mb-4 pt-4 pl-4 col-span-2">
@@ -137,7 +137,7 @@ export default function StudyMode(props: {}) {
         )}
       </button>
       <Button
-        className="mt-auto mb-8 row-start-3 col-start-2 justify-self-center w-full max-w-xs"
+        className="mt-auto mb-8 row-start-3 col-start-2 justify-self-center w-full max-w-xs z-10"
         onClick={flipCard}
       >
         Flip

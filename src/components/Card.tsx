@@ -45,6 +45,7 @@ export default function Card(props: {
   const animatingFlip = useRef(false); // solves problem where switching cards triggers flip animation
   const [flipShowFront, setFlipShowFront] = useState(true);
   const [flipShowBack, setFlipShowBack] = useState(false);
+  const [flipAnimationTime] = useState(200);
   useEffect(() => {
     animatingFlip.current = true;
     // props.flip: false - front of card is displayed
@@ -52,8 +53,8 @@ export default function Card(props: {
     setTimeout(() => {
       props.flip ? setFlipShowBack(true) : setFlipShowFront(true);
       animatingFlip.current = false;
-    }, 550);
-  }, [props.flip]);
+    }, flipAnimationTime + 50);
+  }, [props.flip, flipAnimationTime]);
   /* End Flip Animation */
 
   return (
@@ -73,14 +74,14 @@ export default function Card(props: {
     >
       <Transition
         show={flipShowFront}
-        enter={`transition ease-out duration-500`}
+        enter={`transition ease-out duration-${flipAnimationTime}`}
         enterFrom={
           animatingFlip.current
             ? `$transform opacity-75 scale-95 rotate-x-90`
             : ""
         }
         enterTo="transform opacity-100 scale-100"
-        leave={`transition ease-in duration-500`}
+        leave={`transition ease-in duration-${flipAnimationTime}`}
         leaveFrom="transform opacity-100 scale-100"
         leaveTo={
           animatingFlip.current
@@ -97,10 +98,10 @@ export default function Card(props: {
 
       <Transition
         show={flipShowBack}
-        enter={`transition ease-out duration-500`}
+        enter={`transition ease-out duration-${flipAnimationTime}`}
         enterFrom={`transform opacity-75 scale-95 -rotate-x-90`}
         enterTo="transform opacity-100 scale-100"
-        leave={`transition ease-in duration-500`}
+        leave={`transition ease-in duration-${flipAnimationTime}`}
         leaveFrom="transform opacity-100 scale-100"
         leaveTo={`transform opacity-100 scale-95 -rotate-x-90`}
       >
@@ -120,15 +121,17 @@ function CardBody(props: {
   className?: string;
 }) {
   return (
-    <div className={`max-w-lg ${props.className}`}>
-      <div className="sm:aspect-w-9 sm:aspect-h-14 md:aspect-w-14 md:aspect-h-9">
-        <div className="p-4 bg-white rounded-lg shadow">
-          <div id="front" className="grid grid-cols-1 grid-rows-3 h-full">
-            <span className="font-semibold text-gray-400">{props.label}</span>
-            <div className="row-start-2 text-center prose my-auto">
-              <Markdown>{props.content}</Markdown>
-            </div>
-          </div>
+    <div
+      className={`p-4 bg-white rounded-lg shadow max-w-lg ${props.className}`}
+      style={{
+        aspectRatio: "14/9",
+      }}
+    >
+      {/* Move back to tailwind aspect ratio for safari-mobile support */}
+      <div id="front" className="grid grid-cols-1 grid-rows-3 h-full">
+        <span className="font-semibold text-gray-400">{props.label}</span>
+        <div className="row-start-2 text-center prose my-auto">
+          <Markdown>{props.content}</Markdown>
         </div>
       </div>
     </div>
