@@ -20,7 +20,7 @@ export default function DeckSummary(props: { deck: Deck }) {
   }
 
   // used to show modal
-  const { showModal, setShowModal, handleModalClose } = useModal();
+  const [showModal, setShowModal, handleModalClose] = useModal();
 
   return (
     <div

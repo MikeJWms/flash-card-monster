@@ -22,7 +22,7 @@ export default function DeckView() {
     return null;
   }
 
-  const selectedDeck: Deck = deckState.get(id)
+  const selectedDeck: Deck = deckState.get(id);
 
   if (!selectedDeck) {
     console.log("Deck not selected ", selectedDeck);

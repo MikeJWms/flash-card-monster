@@ -41,12 +41,15 @@ export default function ModalController(props: {
   );
 }
 
-export function useModal() {
+export function useModal(): [
+  boolean,
+  React.Dispatch<React.SetStateAction<boolean>>,
+  () => void
+] {
   const [showModal, setShowModal] = useState(false);
-
   const handleModalClose = () => {
     setShowModal(false);
   };
 
-  return { showModal, setShowModal, handleModalClose };
+  return [showModal, setShowModal, handleModalClose];
 }

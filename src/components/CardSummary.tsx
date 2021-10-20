@@ -19,7 +19,7 @@ export default function CardSummary(props: { card: Card; deckId: string }) {
   const back = card.back ? card.back : "‎";
 
   // used to show modal
-  const { showModal, setShowModal, handleModalClose } = useModal();
+  const [showModal, setShowModal, handleModalClose] = useModal();
 
   return (
     <div className="mx-2 my-2 p-4 border w-96 inline-block rounded-lg cursor-pointer relative hover:shadow">

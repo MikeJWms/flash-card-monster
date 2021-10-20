@@ -8,7 +8,7 @@ export default function AddDeckModal(props: {
     theme?: ButtonTheme;
   };
 }) {
-  const { showModal, setShowModal, handleModalClose } = useModal();
+  const [showModal, setShowModal, handleModalClose] = useModal();
 
   return (
     <>

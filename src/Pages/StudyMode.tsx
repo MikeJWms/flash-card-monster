@@ -1,7 +1,14 @@
 import { useParams } from "react-router";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { DeckContext } from "../contexts/DeckContext";
-import Button from "../components/Button";
+import Button, { BUTTON_THEME } from "../components/Button";
 import { useHistory } from "react-router-dom";
 import Card from "../components/Card";
 import { navHeight as navigationHeight } from "../components/Nav";
@@ -109,7 +116,7 @@ export default function StudyMode(props: {}) {
       style={{
         height: `calc(100vh - ${navHeight}px)`,
         gridTemplateRows: "1fr minmax(0, 4fr) 1fr",
-        gridTemplateColumns: "1fr minmax(0, 4fr) 1fr"
+        gridTemplateColumns: "1fr minmax(0, 4fr) 1fr",
       }}
     >
       <div className="mb-4 pt-4 pl-4 col-span-2">
@@ -136,13 +143,33 @@ export default function StudyMode(props: {}) {
           <ArrowRightIcon className="w-8" />
         )}
       </button>
-      <Button
-        className="mt-auto mb-8 row-start-3 col-start-2 justify-self-center w-full max-w-xs z-10"
-        onClick={flipCard}
-      >
-        Flip
-        <ArrowUpIcon className="hidden md:inline h-4 ml-4 text-blue-400" />
-      </Button>
+      <div className="mt-auto mb-8 row-start-3 col-start-2 w-full z-10 flex justify-around">
+        {!flip && (
+          <Button className="w-full max-w-xs" onClick={flipCard}>
+            Flip
+            <ArrowUpIcon className="hidden md:inline h-4 ml-4 text-blue-400" />
+          </Button>
+        )}
+        {flip && (
+          <Fragment>
+            <Button
+              className=""
+              theme={BUTTON_THEME.WARNING}
+              onClick={flipCard}
+            >
+              Not yet
+            </Button>
+
+            <Button
+              className=""
+              theme={BUTTON_THEME.SUCCESS}
+              onClick={flipCard}
+            >
+              Got it
+            </Button>
+          </Fragment>
+        )}
+      </div>
       <div className="col-span-3 md:col-span-1 m-4 md:m-0 row-start-2 md:col-start-2 self-center">
         {cardArray && (
           <Card
