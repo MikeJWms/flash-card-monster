@@ -9,7 +9,7 @@ export default function AddCardModal(props: {
     theme?: ButtonTheme;
   };
 }) {
-  const [showModal, setShowModal, handleModalClose] = useModal();
+  const [showModal, setShowModal] = useModal();
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function AddCardModal(props: {
         title="Add Card"
         show={showModal}
         submitAction={Submit}
-        updateShowState={handleModalClose}
+        updateShowState={setShowModal}
         submitButtonText="Add Card"
       >
         <AddCardForm deckId={props.deckId} />

@@ -8,7 +8,7 @@ export default function AddDeckModal(props: {
     theme?: ButtonTheme;
   };
 }) {
-  const [showModal, setShowModal, handleModalClose] = useModal();
+  const [showModal, setShowModal] = useModal();
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function AddDeckModal(props: {
         title="Add Deck"
         show={showModal}
         submitAction={Submit}
-        updateShowState={handleModalClose}
+        updateShowState={setShowModal}
         submitButtonText="Add Deck"
       >
         <AddDeckForm />

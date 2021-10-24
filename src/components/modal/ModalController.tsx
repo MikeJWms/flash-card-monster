@@ -1,6 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
 import Modal, { THEME } from "./Modal";
 
+// TODO: title, submitButtonText, and submitAction should be its own interface
+//       called ModalContent. An additional attribute should be added called
+//       'body', which is handled in series with children.
+
 export default function ModalController(props: {
   show?: boolean;
   children?: ReactElement;
@@ -43,13 +47,12 @@ export default function ModalController(props: {
 
 export function useModal(): [
   boolean,
-  React.Dispatch<React.SetStateAction<boolean>>,
-  () => void
+  React.Dispatch<React.SetStateAction<boolean>>
 ] {
   const [showModal, setShowModal] = useState(false);
   const handleModalClose = () => {
     setShowModal(false);
   };
 
-  return [showModal, setShowModal, handleModalClose];
+  return [showModal, setShowModal];
 }

@@ -20,7 +20,7 @@ export default function DeckSummary(props: { deck: Deck }) {
   }
 
   // used to show modal
-  const [showModal, setShowModal, handleModalClose] = useModal();
+  const [showModal, setShowModal] = useModal();
 
   return (
     <div
@@ -34,7 +34,7 @@ export default function DeckSummary(props: { deck: Deck }) {
         title="Edit Deck"
         show={showModal}
         submitAction={Submit}
-        updateShowState={handleModalClose}
+        updateShowState={setShowModal}
         submitButtonText="Update Deck"
       >
         <AddDeckForm deckId={deck.id} />
